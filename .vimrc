@@ -136,10 +136,7 @@ au FocusLost * :wa "Save on lostfocus
 "Search
 set ignorecase
 set showcmd
-set smartcase
-set gdefault
-set incsearch
-set showmatch
+set smartcase set gdefault set incsearch set showmatch
 set hlsearch
 nnoremap <leader><space> :noh<cr>
 "i don`t use ;
@@ -152,13 +149,13 @@ let Tlist_Use_SingleClick = 1
 let Tlist_Inc_Winwidth = 0
 "}}}
 "Control mpd
-if has('python')
-    py import os, sys
-    py sys.path.append(os.path.expanduser("/home/snoopt/soft/vimmp"))
-    pyf /home/snoopt/soft/vimmp/main.py
-endif
-let g:mpd_music_directory="~/Музыка"
+"if has('python')
+    "py import os, sys
+    "py sys.path.append(os.path.expanduser("/home/snoopt/soft/vimmp"))
+    "pyf /home/snoopt/soft/vimmp/main.py
+"endif
+let g:mpd_music_directory="~/music"
 let g:mpd_playlist_directory="~/.mpd/playlists"
 let g:vimmp_server_type = "mpd"
 nmap <silent> <leader>mp :py vimmp_toggle()<cr>
-let g:pydiction_location='/home/snoopt/.vim/ftplugin/pydiction/complete-dict'
+"let g:pydiction_location='/home/snoopt/.vim/ftplugin/pydiction/complete-dict'
