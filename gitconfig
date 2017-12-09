@@ -1,0 +1,85 @@
+[user]
+	name = Artemiy Rodionov
+	email = artemiy.rodionov@gmail.com
+	signingkey = BBC1CF73
+[tag]
+	gpgSign = true
+[color]
+	ui = auto
+[color "branch"]
+	current = yellow reverse
+	local = yellow
+	remote = green
+[color "diff"]
+	meta = yellow bold
+	frag = magenta bold
+	old = red bold
+	new = green bold
+	whitespace = red reverse
+[color "status"]
+	added = yellow
+	changed = green
+	untracked = cyan
+[core]
+	whitespace=fix,-indent-with-non-tab,trailing-space,cr-at-eol
+	excludesfile = ~/.gitignore
+	editor = vim
+[merge]
+	tool = fugitive
+	ff = only
+	conflictstyle = diff3
+[alias]
+	st = status
+	ci = commit
+	br = branch
+	co = checkout
+	df = diff
+	dc = diff --cached
+	lg = log -p
+	lol = log --graph --decorate --pretty=oneline --abbrev-commit
+	lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
+	ls = ls-files
+        todo = grep -n -e TODO -e FIXME -e OPTIMIZE
+	# Show files ignored by git:
+	ign = ls-files -o -i --exclude-standard
+
+	# Ignore files
+	assume   = update-index --assume-unchanged
+	unassume = update-index --no-assume-unchanged
+	assumed  = "!git ls-files -v | grep ^h | cut -c 3-"
+
+	prune = fetch --prune
+	# Delete local branches that are not upstream
+	# https://git-scm.com/docs/git-fetch#git-fetch--p
+
+	undo = reset --soft HEAD^
+	# https://git-scm.com/docs/git-reset#git-reset-emgitresetemltmodegtltcommitgt
+
+	stash-all = stash save --include-untracked
+	# We wanna grab those pesky un-added files!
+	# https://git-scm.com/docs/git-stash
+
+	glog = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
+	# No need for a GUI - a nice, colorful, graphical representation
+	# https://git-scm.com/docs/git-log
+	# via https://medium.com/@payload.dd/thanks-for-the-git-st-i-will-use-this-4da5839a21a4
+
+	up = "!git remote update -p; git merge --ff-only @{u}"
+
+	publish = push -u origin HEAD
+[push]
+	default = simple
+	followTags = true
+
+[status]
+	showUntrackedFiles = all
+[filter "lfs"]
+	clean = git lfs clean %f
+	smudge = git lfs smudge %f
+	required = true
+[mergetool "fugitive"]
+	cmd = vim -f -c \"Gdiff\" \"$MERGED\"
+[fetch]
+	recurseSubmodules = false
+[gpg]
+	program = gpg2

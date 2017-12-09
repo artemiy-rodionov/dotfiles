@@ -23,11 +23,18 @@
 # Logs and databases #
 ######################
 *.log
+*.log.*
 *.sql
 *.sqlite
+*.sqlite3
+*.db
 
 # Python genearated #
+######################
 *.pyc
+env/
+build/
+.ropeproject/
 
 # OS generated files #
 ######################
@@ -36,9 +43,19 @@ ehthumbs.db
 Icon?
 Thumbs.db
 *.un~
+*~
 
 
 # Django local files #
 ######################
-local_settings.py
+settings_local.py
 manage_local.py
+
+# Other vcs          #
+######################
+.*
+
+# Backup files       #
+######################
+*.bak
+*.backup
