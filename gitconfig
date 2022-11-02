@@ -1,9 +1,7 @@
 [user]
 	name = Artemiy Rodionov
 	email = artemiy.rodionov@gmail.com
-	signingkey = BBC1CF73
-[tag]
-	gpgSign = true
+	signingkey = BA4AE8E95683A849
 [color]
 	ui = auto
 [color "branch"]
@@ -24,15 +22,20 @@
 	whitespace=fix,-indent-with-non-tab,trailing-space,cr-at-eol
 	excludesfile = ~/.gitignore
 	editor = vim
+	pager = diff-so-fancy | less --tabs=4 -RFX
 [merge]
 	tool = fugitive
 	ff = only
 	conflictstyle = diff3
+[merge "pofile"]
+	name = Gettext merge driver
+	driver = git merge-po %O %A %B
 [alias]
 	st = status
 	ci = commit
 	br = branch
 	co = checkout
+	colast = checkout @{-1}
 	df = diff
 	dc = diff --cached
 	lg = log -p
@@ -82,4 +85,8 @@
 [fetch]
 	recurseSubmodules = false
 [gpg]
-	program = gpg2
+	program = /opt/homebrew/bin/gpg
+[pull]
+	ff = only
+[commit]
+	gpgsign = true

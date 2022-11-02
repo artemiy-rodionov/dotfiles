@@ -1,3 +1,9 @@
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+# export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python3
+# export PIP_REQUIRE_VIRTUALENV=true
+export PIP_DOWNLOAD_CACHE=$HOME/.pip/cache
+
 # Path to your oh-my-zsh configuration.
 ZSH=$HOME/.oh-my-zsh
 
@@ -46,18 +52,22 @@ ZSH_THEME="miloshadzic"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 plugins=(
-git
-pip
-redis-cli
-supervisor
-# vagrant
-docker
-virtualenvwrapper
-autojump
-# custom-aliases
-debian
-fabric
-bower
+	git
+	git-extras
+	git-extra-commands
+	npm
+	pip
+	redis-cli
+	docker
+	docker-compose
+	dotenv
+	# vagrant
+	autojump
+	fzf
+	macos
+	zsh-autosuggestions
+	# must be the last one
+	# zsh-syntax-highlighting
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -87,14 +97,15 @@ export TERM="xterm-256color"
 export GOPATH=~/sources/golang
 export PATH=$PATH:$GOPATH/bin
 
-# The next line updates PATH for the Google Cloud SDK.
-source $HOME/soft/google-cloud-sdk/path.zsh.inc
+if [ -d "$HOME/soft/google-cloud-sdk" ]; then
+	# The next line updates PATH for the Google Cloud SDK.
+	source $HOME/soft/google-cloud-sdk/path.zsh.inc
 
-# The next line enables bash completion for gcloud.
-source $HOME/soft/google-cloud-sdk/completion.zsh.inc
+	# The next line enables bash completion for gcloud.
+	source $HOME/soft/google-cloud-sdk/completion.zsh.inc
+fi
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
-export EXTRA_CFG=$HOME/Dropbox/projects/ext/sportchat/extra_sync/cfg/dev.json
 
 if [[ `uname` == 'Linux' ]]
 then
@@ -109,15 +120,15 @@ else
 	export OSX=
 fi
 
-if [[ "$OSX" == "1" ]]
-then
-	export ANDROID_HOME=/usr/local/opt/android-sdk
-fi
 
-if [[ "$LINUX" == "1" ]]
-then
-	export ANDROID_HOME=~/soft/android-sdk-linux
-fi
+# gettext bin
+export PATH=${PATH}:/usr/local/opt/gettext/bin
+
+# node
+export NVM_DIR="$HOME/.nvm"
+[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && . "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
+[ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && . "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+
 
 
 fancy-ctrl-z () {
@@ -132,10 +143,53 @@ fancy-ctrl-z () {
 zle -N fancy-ctrl-z
 bindkey '^Z' fancy-ctrl-z
 
-mkdir -p $HOME/soft/ruby
-export GEM_HOME=$HOME/soft/ruby
-export PATH=$PATH:$HOME/soft/ruby/bin
+export GEM_HOME=/usr/local/Cellar/ruby/2.5.1
+export PATH=$PATH:/usr/local/Cellar/ruby/2.5.1/bin
+
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
+eval "$(pyenv init --path)"
+eval "$(pyenv virtualenv-init -)"
+
 
 function myip { curl ifconfig.me }
+function pjson {
+    if [ $# -gt 0 ];
+        then
+        for arg in $@
+        do
+            if [ -f $arg ];
+                then
+                less $arg | python -m json.tool
+            else
+                echo "$arg" | python -m json.tool
+            fi
+        done
+    fi
+}
 
-test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+# source "$(navi widget zsh)"
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+export PATH="/opt/homebrew/bin:$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+export PATH="/usr/local/go/bin:$PATH"
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/Users/snoopt/soft/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/Users/snoopt/soft/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "/Users/snoopt/soft/miniconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/Users/snoopt/soft/miniconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
+source /Users/snoopt/.config/broot/launcher/bash/br
+export GPG_TTY=$(tty)

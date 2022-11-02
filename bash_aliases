@@ -1,3 +1,5 @@
+alias vim="/opt/homebrew/bin/vim"
+alias vi="vim"
 alias ealias="vim ~/.bash_aliases"
 alias ralias="source ~/.bash_aliases"
 
@@ -64,9 +66,28 @@ alias dockercleanc='printf "\n>>> Deleting stopped containers\n\n" && docker rm 
 
 # Delete all untagged images.
 alias dockercleani='printf "\n>>> Deleting untagged images\n\n" && docker rmi $(docker images -q -f dangling=true)'
-alias dockercleanv='printf "\n>>> Deleting unused volumes\n\n &&  docker volume rm $(docker volume ls -qf dangling=true)'
+alias dockercleanv='printf "\n>>> Deleting unused volumes\n\n" &&  docker volume rm $(docker volume ls -qf dangling=true)'
 
 # Delete all stopped containers and untagged images.
 alias dockerclean='dockercleanc || true && dockercleani && dockercleanv'
 
 alias 1w='ssh 1ch-work'
+alias kor="ssh nalg -t 'tmux a;bash -l'"
+alias vgolf='vimgolf put'
+
+alias ts='date +%s'
+alias pU='pip install -U'
+alias pI='pip install'
+alias pR='pip install -r requirements.txt'
+alias condapi='PIP_REQUIRE_VIRTUALENV=false pip install'
+alias setvenv='echo `basename "$PWD"` > .python-version'
+
+alias socks="ssh -D 1337 -f -C -q -N nalg && networksetup -setsocksfirewallproxy \"Wi-Fi\" localhost 1337 && myip"
+alias rsocks="ps aux|grep 1337"
+alias ksocks="networksetup -setsocksfirewallproxystate \"Wi-Fi\" off && myip"
+alias gg="git grep"
+alias gbr="git for-each-ref --sort=committerdate refs/heads/ --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:green)%(committerdate:relative)%(color:reset))'"
+alias runjupyter="cd /Users/snoopt/projects/mywork/notebooks && conda activate fastai && jupyter lab"
+alias venv="pyenv virtualenv 3.9.1 `basename "$PWD"` && echo `basename "$PWD"` > .python-version"
+alias gitdryclean='git checkout -q master && git for-each-ref refs/heads/ "--format=%(refname:short)" | while read branch; do mergeBase=$(git merge-base master $branch) && [[ $(git cherry master $(git commit-tree $(git rev-parse "$branch^{tree}") -p $mergeBase -m _)) == "-"* ]] && echo "$branch is merged into master and can be deleted"; done'
+alias gitclean='git checkout -q master && git for-each-ref refs/heads/ "--format=%(refname:short)" | while read branch; do mergeBase=$(git merge-base master $branch) && [[ $(git cherry master $(git commit-tree $(git rev-parse "$branch^{tree}") -p $mergeBase -m _)) == "-"* ]] && git branch -D $branch; done'
